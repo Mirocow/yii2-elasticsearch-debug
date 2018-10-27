@@ -41,7 +41,7 @@ echo \yii\grid\GridView::widget([
             'value' => function ($data) use ($panel) {
                 $output = [];
 
-                $output[] = $data['query'];
+                $output[] = Html::tag('div', Html::encode($data['query']));
 
                 if (!empty($data['trace'])) {
                     $output[] = Html::ul($data['trace'], [
