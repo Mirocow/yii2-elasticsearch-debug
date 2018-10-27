@@ -12,18 +12,10 @@ use yii\log\Logger;
  */
 class DebugPanel extends Panel
 {
-    public $db = 'elasticsearch';
-
     private $_timings = null;
 
     public function init()
     {
-        $this->actions['elasticsearch-query'] = [
-            'class' => 'mirocow\\elasticsearch\\debug\\DebugAction',
-            'panel' => $this,
-            'db' => $this->db,
-        ];
-
         $this->actions['js-pretty'] = [
             'class' => 'mirocow\\elasticsearch\\debug\\PrettyAction',
             'panel' => $this,
