@@ -68,6 +68,30 @@ echo \yii\grid\GridView::widget([
             ],
         ],
         [
+            'attribute' => 'hits',
+            'value' => function ($data) {
+                return $data['hits'];
+            },
+            'options' => [
+                'width' => '5%',
+            ],
+            'headerOptions' => [
+                //'class' => 'sort-numerical'
+            ]
+        ],
+        [
+            'attribute' => 'aggs',
+            'value' => function ($data) {
+                return $data['aggs'];
+            },
+            'options' => [
+                'width' => '5%',
+            ],
+            'headerOptions' => [
+                //'class' => 'sort-numerical'
+            ]
+        ],
+        [
             'attribute' => 'duration',
             'value' => function ($data) {
                 return sprintf('%.1f ms', $data['duration'] * 1000);

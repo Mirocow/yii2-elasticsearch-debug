@@ -57,7 +57,7 @@ class DebugPanel extends Panel
 
         return $target->filterMessages(
             $target->messages,
-            Logger::LEVEL_PROFILE | Logger::LEVEL_TRACE, [
+            Logger::LEVEL_PROFILE | Logger::LEVEL_INFO, [
             'mirocow\elasticsearch\components\indexes\AbstractSearchIndex::execute',
         ]);
     }
@@ -112,13 +112,25 @@ class DebugPanel extends Panel
         $messages = isset($this->data['messages']) ? $this->data['messages'] : [];
         $timings = [];
         $stack = [];
+        $query = '';
+        $hits = 0;
+        $aggs = 0;
         foreach ($messages as $i => $log) {
             list($token, $level, $category, $timestamp) = $log;
             $log[5] = $i;
             if ($level == Logger::LEVEL_PROFILE_BEGIN) {
                 $stack[] = $log;
-            } elseif ($level == Logger::LEVEL_TRACE) {
-                list($message, $query) = explode("\n", $token);
+            } elseif ($level == Logger::LEVEL_INFO) {
+                if(is_string($token)) {
+                    $query = $token;
+                } elseif (is_array($token)){
+                    if(!empty($token['hits']['total'])) {
+                        $hits = $token['hits']['total'];
+                    }
+                    if(!empty($token['aggregations'])) {
+                        $aggs = count($token['aggregations']);
+                    }
+                }
             } elseif ($level == Logger::LEVEL_PROFILE_END) {
                 if (($last = array_pop($stack)) !== null && $last[0] === $token) {
                     $timings[$last[5]] = [
@@ -129,6 +141,8 @@ class DebugPanel extends Panel
                         'trace' => $last[4],
                         'query' => $query,
                         'seq' => $last[5],
+                        'hits' => $hits,
+                        'aggs' => $aggs,
                     ];
                     $query = '';
                 }
@@ -145,6 +159,9 @@ class DebugPanel extends Panel
                 'duration' => $delta,
                 'trace' => $last[4],
                 'seq' => $last[5],
+                'query' => $query,
+                'hits' => $hits,
+                'aggs' => $aggs,
             ];
         }
         ksort($timings);
