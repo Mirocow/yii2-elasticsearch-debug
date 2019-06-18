@@ -2,7 +2,7 @@
   "name": "mirocow/yii2-elasticsearch-debug",
   "description": "Yii2 elasticsearch debug panel",
   "type": "yii2-extension",
-  "license": "BSD-3-Clause",
+  "license": "MIT",
   "support": {
     "issues": "https://github.com/mirocow/yii2-elasticsearch-debug",
     "source": "https://github.com/mirocow/yii2-elasticsearch-debug"
