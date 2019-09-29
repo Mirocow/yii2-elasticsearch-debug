@@ -4,6 +4,10 @@
 
 # Install
 
+```bash
+$ composer require --prefer-dist mirocow/yii2-elasticsearch-debug
+```
+
 ```php
 if (YII_DEBUG) {
     // configuration adjustments for 'dev' environment
