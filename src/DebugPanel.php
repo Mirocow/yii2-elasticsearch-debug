@@ -155,7 +155,7 @@ class DebugPanel extends Panel
             $timings[$last[5]] = [
                 'queries' => count($stack),
                 'route' => $last[0],
-                'timestamp' => $last[2] * 1000,
+                'timestamp' => $last[3] * 1000,
                 'duration' => $delta,
                 'trace' => $last[4],
                 'seq' => $last[5],
